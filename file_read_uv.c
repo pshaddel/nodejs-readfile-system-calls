@@ -17,7 +17,7 @@ void on_read(uv_fs_t* req) {
         printf("Read complete.\n");
     } else {
         // Print the content read
-        printf(buffer);
+        printf("%s", buffer);
     }
 
     // Clean up read request
