@@ -9,13 +9,19 @@
 char buffer[BUFFER_SIZE];
 
 // Callback when the file read is completed
-void on_read(uv_fs_t* req) {
-    if (req->result < 0) {
+void on_read(uv_fs_t *req)
+{
+    if (req->result < 0)
+    {
         fprintf(stderr, "Read error: %s\n", uv_strerror((int)req->result));
-    } else if (req->result == 0) {
+    }
+    else if (req->result == 0)
+    {
         // End of file reached
         printf("Read complete.\n");
-    } else {
+    }
+    else
+    {
         // Print the content read
         printf("%s", buffer);
     }
@@ -26,15 +32,17 @@ void on_read(uv_fs_t* req) {
 }
 
 // Callback when the file is opened
-void on_open(uv_fs_t* req) {
-    if (req->result < 0) {
+void on_open(uv_fs_t *req)
+{
+    if (req->result < 0)
+    {
         fprintf(stderr, "Error opening file: %s\n", uv_strerror((int)req->result));
         free(req);
         return;
     }
 
     int file = (int)req->result;
-    uv_fs_t *read_req = (uv_fs_t*) malloc(sizeof(uv_fs_t));
+    uv_fs_t *read_req = (uv_fs_t *)malloc(sizeof(uv_fs_t));
     uv_buf_t iov = uv_buf_init(buffer, sizeof(buffer));
 
     // Read the file
@@ -45,9 +53,10 @@ void on_open(uv_fs_t* req) {
     free(req);
 }
 
-int main() {
+int main()
+{
     uv_loop_t *loop = uv_default_loop();
-    uv_fs_t *open_req = (uv_fs_t*) malloc(sizeof(uv_fs_t));
+    uv_fs_t *open_req = (uv_fs_t *)malloc(sizeof(uv_fs_t));
 
     // Open the file hello.txt
     uv_fs_open(loop, open_req, "hello.txt", O_RDONLY, 0, on_open);
