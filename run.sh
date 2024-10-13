@@ -8,6 +8,7 @@ for js_file in *.js; do
     if [[ -f "$js_file" ]]; then
         for param in 1 101; do
             strace -o ./data/"${js_file%.js}"_"$param".txt -c node ./"$js_file" "$param"
+            node convert.js ./data/"${js_file%.js}"_"$param".txt ./data/"${js_file%.js}"_"$param"_converted.json
         done
     fi
 done
@@ -19,6 +20,7 @@ for c_file in *.c; do
         gcc ./"$c_file" -o ./"${c_file%.c}" -luv
         for param in 1 101; do
             strace -o ./data/"${c_file%.c}"_"$param".txt -c ./"${c_file%.c}" "$param"
+            node convert.js ./data/"${c_file%.c}"_"$param".txt ./data/"${c_file%.c}"_"$param"_converted.json
         done
     fi
 done
