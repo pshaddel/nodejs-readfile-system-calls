@@ -1,5 +1,5 @@
 const fs = require('fs');
-
+fs.promises.readFile
 function read_file_1() {
   try {
     // get the number of times we should repeat the read operation
@@ -13,9 +13,3 @@ function read_file_1() {
   }
 }
 read_file_1();
-
-
-// 1 * StartAndTearDown + 1X = 628 Syscalls
-// 1 * StartAndTearDown + 101X = 1128 Syscalls
-// 100X = 500 Syscalls
-// X = 5 Syscalls
