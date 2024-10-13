@@ -5,8 +5,13 @@
 
 #define BUFFER_SIZE 1024
 
+// Forward declaration of the on_open function
+void on_open(uv_fs_t *req);
+
 // Buffer to store the file content
 char buffer[BUFFER_SIZE];
+int repetitions = 1;
+int current_read = 0;
 
 // Callback when the file read is completed
 void on_read(uv_fs_t *req)
@@ -29,6 +34,13 @@ void on_read(uv_fs_t *req)
     // Clean up read request
     uv_fs_req_cleanup(req);
     free(req);
+
+    // Check if we need to read the file again
+    if (++current_read < repetitions)
+    {
+        uv_fs_t *open_req = (uv_fs_t *)malloc(sizeof(uv_fs_t));
+        uv_fs_open(uv_default_loop(), open_req, "hello.txt", O_RDONLY, 0, on_open);
+    }
 }
 
 // Callback when the file is opened
@@ -53,8 +65,22 @@ void on_open(uv_fs_t *req)
     free(req);
 }
 
-int main()
+int main(int argc, char *argv[])
 {
+    if (argc < 2)
+    {
+        fprintf(stderr, "Usage: %s <repetitions>\n", argv[0]);
+        return 1;
+    }
+
+    // Parse the number of repetitions
+    repetitions = atoi(argv[1]);
+    if (repetitions <= 0)
+    {
+        fprintf(stderr, "Error: Repetitions must be a positive integer\n");
+        return 1;
+    }
+
     uv_loop_t *loop = uv_default_loop();
     uv_fs_t *open_req = (uv_fs_t *)malloc(sizeof(uv_fs_t));
 
