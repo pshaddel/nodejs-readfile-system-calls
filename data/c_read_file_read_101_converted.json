@@ -1,0 +1,36 @@
+{
+  "syscall": [
+    "read",
+    "openat",
+    "write",
+    "close",
+    "lseek",
+    "fstat",
+    "mmap",
+    "mprotect",
+    "munmap",
+    "brk",
+    "pread64",
+    "1 access",
+    "execve",
+    "1 arch_prct",
+    "2 total"
+  ],
+  "calls": [
+    203,
+    103,
+    101,
+    103,
+    101,
+    2,
+    7,
+    3,
+    1,
+    1,
+    6,
+    1,
+    1,
+    2,
+    635
+  ]
+}
