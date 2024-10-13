@@ -1,0 +1,6 @@
+# Ignores files without any extension(Executable files)
+*
+!/**/
+!*.*
+# Ignore files with the .sh extension
+*.sh
